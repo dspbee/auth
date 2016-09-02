@@ -21,7 +21,7 @@ class AccessTest extends Test
             $this->assertEquals(0, $user->id());
             $this->assertEquals(0, $user->groupId());
             $this->assertEquals(null, $user->data());
-            $this->assertEquals('', $user->status());
+            $this->assertEquals(User::ERROR_LOGIN, $user->status());
 
 
             $registration = new Registration($db, 'user', 'user_group', 'token', '__user__', 'user_access');

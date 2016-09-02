@@ -24,6 +24,7 @@ class Access extends Common implements IAccess
     public function getUser($hash = '', $route = '', $method = '*', $default = false): User
     {
         $user = new User();
+        $user->setStatus(User::ERROR_LOGIN);
         
         if (empty($hash)) {
             $hash = (new CookieBag())->fetch($this->tokenName);
@@ -90,8 +91,6 @@ class Access extends Common implements IAccess
                 } else {
                     $user->setStatus(User::ERROR_ACCESS);
                 }
-            } else {
-                $user->setStatus(User::ERROR_LOGIN);
             }
         }
         
