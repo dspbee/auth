@@ -19,7 +19,8 @@ interface IAccess
      * @param string $hash
      * @param string $route
      * @param string $method
+     * @param bool $default
      * @return User
      */
-    public function getUser($hash = '', $route = '', $method = '*'): User;
+    public function getUser($hash = '', $route = '', $method = '*', $default = false): User;
 }
