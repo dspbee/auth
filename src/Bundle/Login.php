@@ -29,7 +29,7 @@ class Login extends Common implements ILogin
     {
         $this->userId = 0;
         $this->hash = '';
-        $this->error = '';
+        $this->error = self::WRONG_EMAIL_OR_PASSWORD;
         
         if (!empty($input->email()) && !empty($input->password())) {
             if (filter_var($input->email(), FILTER_VALIDATE_EMAIL)) {
@@ -64,6 +64,7 @@ class Login extends Common implements ILogin
                                             setcookie($this->tokenName, $hash, time() + 3600 * 24 * 30, '/');
                                         }
                                     }
+                                    $this->error = '';
                                     return true;
                                 }
                         }
@@ -99,6 +100,7 @@ class Login extends Common implements ILogin
     private $hash;
 
     const EMPTY_EMAIL_OR_PASSWORD = 'EMPTY_EMAIL_OR_PASSWORD';
+    const WRONG_EMAIL_OR_PASSWORD = 'WRONG_EMAIL_OR_PASSWORD';
     const WRONG_EMAIL = 'WRONG_EMAIL';
     const NOT_ACTIVE = 'NOT_ACTIVE';
     const BANNED = 'BANNED';
