@@ -36,7 +36,7 @@ class LoginTest extends Test
             $input->setEmail('dspbee@gmail.com');
             $input->setPassword('pass');
             $this->assertFalse($login->enter($input, false));
-            $this->assertEquals('', $login->error());
+            $this->assertEquals(Login::WRONG_EMAIL_OR_PASSWORD, $login->error());
             $this->assertEquals(0, $login->userId());
             $this->assertEquals('', $login->hash());
 

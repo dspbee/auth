@@ -106,7 +106,7 @@ class RestoreTest extends Test
             $this->assertFalse($login->enter($input, false));
             $hash = $login->hash();
             $this->assertEquals(0, strlen($hash));
-            $this->assertEquals('', $login->error());
+            $this->assertEquals(Login::WRONG_EMAIL_OR_PASSWORD, $login->error());
 
             $input->setPassword('123');
             $this->assertTrue($login->enter($input, false));
