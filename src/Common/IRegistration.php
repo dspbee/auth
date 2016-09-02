@@ -24,4 +24,9 @@ interface IRegistration
      * @return bool
      */
     public function confirmRegistration($hash);
+    
+    /**
+     * @return string
+     */
+    public function error();
 }

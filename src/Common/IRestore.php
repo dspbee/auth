@@ -29,4 +29,9 @@ interface IRestore
      * @return bool
      */
     public function changePassword($hash, $password);
+    
+    /**
+     * @return string
+     */
+    public function error();
 }

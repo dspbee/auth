@@ -18,4 +18,19 @@ interface ILogin
      * @return int
      */
     public function enter(LoginInput $input);
+
+    /**
+     * @return int
+     */
+    public function userId();
+
+    /**
+     * @return string
+     */
+    public function hash();
+
+    /**
+     * @return string
+     */
+    public function error();
 }
