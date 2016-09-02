@@ -86,7 +86,12 @@ class Access extends Common implements IAccess
                             'data' => $token->data()
                         ]
                     );
+                    $user->setStatus(User::AUTHORIZED);
+                } else {
+                    $user->setStatus(User::ERROR_ACCESS);
                 }
+            } else {
+                $user->setStatus(User::ERROR_LOGIN);
             }
         }
         

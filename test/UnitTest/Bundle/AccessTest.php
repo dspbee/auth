@@ -6,6 +6,7 @@ use Dspbee\Auth\Bundle\Login;
 use Dspbee\Auth\Bundle\LoginInput;
 use Dspbee\Auth\Bundle\Registration;
 use Dspbee\Auth\Bundle\RegistrationInput;
+use Dspbee\Auth\User;
 use Dspbee\Test\Test;
 
 class AccessTest extends Test
@@ -20,6 +21,7 @@ class AccessTest extends Test
             $this->assertEquals(0, $user->id());
             $this->assertEquals(0, $user->groupId());
             $this->assertEquals(null, $user->data());
+            $this->assertEquals('', $user->status());
 
 
             $registration = new Registration($db, 'user', 'user_group', 'token', '__user__', 'user_access');
@@ -36,11 +38,17 @@ class AccessTest extends Test
             $login->enter($input, false);
             $hash = $login->hash();
 
+            $user = $access->getUser($hash . '2');
+            $this->assertEquals(0, $user->id());
+            $this->assertEquals(0, $user->groupId());
+            $this->assertEquals(null, $user->data());
+            $this->assertEquals(User::ERROR_LOGIN, $user->status());
 
             $user = $access->getUser($hash);
             $this->assertEquals(1, $user->id());
             $this->assertEquals(2, $user->groupId());
             $this->assertEquals(null, $user->data());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $db->query("INSERT INTO `user_access` SET `userId` = 0, `groupId` = 0, `route` = 'index', `method` = '*', `access` = 'true'");
             $db->query("INSERT INTO `user_access` SET `userId` = 0, `groupId` = 0, `route` = 'index', `method` = 'GET', `access` = 'true'");
@@ -50,21 +58,27 @@ class AccessTest extends Test
 
             $user = $access->getUser($hash, 'index');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', '*');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'GET');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'POST');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'PUT');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'AJAX');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
 
             $db->query("TRUNCATE TABLE `user_access`");
@@ -74,21 +88,27 @@ class AccessTest extends Test
 
             $user = $access->getUser($hash, 'index');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', '*');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'GET');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'POST');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'PUT');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'AJAX');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
 
             $db->query("TRUNCATE TABLE `user_access`");
@@ -97,21 +117,27 @@ class AccessTest extends Test
 
             $user = $access->getUser($hash, 'index');
             $this->assertEquals(0, $user->id());
+            $this->assertEquals(User::ERROR_ACCESS, $user->status());
 
             $user = $access->getUser($hash, 'index', '*');
             $this->assertEquals(0, $user->id());
+            $this->assertEquals(User::ERROR_ACCESS, $user->status());
 
             $user = $access->getUser($hash, 'index', 'GET');
             $this->assertEquals(1, $user->id());
+            $this->assertEquals(User::AUTHORIZED, $user->status());
 
             $user = $access->getUser($hash, 'index', 'POST');
             $this->assertEquals(0, $user->id());
+            $this->assertEquals(User::ERROR_ACCESS, $user->status());
 
             $user = $access->getUser($hash, 'index', 'PUT');
             $this->assertEquals(0, $user->id());
+            $this->assertEquals(User::ERROR_ACCESS, $user->status());
 
             $user = $access->getUser($hash, 'index', 'AJAX');
             $this->assertEquals(0, $user->id());
+            $this->assertEquals(User::ERROR_ACCESS, $user->status());
         }
     }
 }

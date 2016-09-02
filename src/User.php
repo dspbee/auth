@@ -20,6 +20,8 @@ class User
         $this->id = 0;
         $this->groupId = 0;
         $this->data = null;
+        
+        $this->status = '';
     }
 
     /**
@@ -49,7 +51,31 @@ class User
         return $this->data;
     }
 
+    /**
+     * Get user status.
+     * @return string
+     */
+    public function status()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set user status.
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
     protected $id;
     protected $groupId;
     protected $data;
+    
+    private $status;
+    
+    const AUTHORIZED = 'AUTHORIZED';
+    const ERROR_LOGIN = 'ERROR_LOGIN';
+    const ERROR_ACCESS = 'ERROR_ACCESS';
 }

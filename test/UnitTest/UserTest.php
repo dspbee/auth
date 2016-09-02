@@ -43,4 +43,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals('test', $user->data());
     }
+    
+    public function testStatus()
+    {
+        $user = new User();
+        $this->assertEquals('', $user->status());
+    }
+
+    public function testSetStatus()
+    {
+        $user = new User();
+        $user->setStatus(User::ERROR_LOGIN);
+        $this->assertEquals(User::ERROR_LOGIN, $user->status());
+    }
 }
