@@ -109,7 +109,7 @@ class Restore extends Common implements IRestore
                                     if (headers_sent()) {
                                         throw new \HttpHeaderException("Can't set cookie, headers already sent.");
                                     } else {
-                                        setcookie($this->tokenName, $hash, time() + 3600 * 24 * 30, '/');
+                                        setcookie($this->tokenName, $hash, time() + 3600 * 24 * 30, '/', "", false, true);
                                     }
                                 }
                                 return true;

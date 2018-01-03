@@ -61,7 +61,7 @@ class Login extends Common implements ILogin
                                         if (headers_sent()) {
                                             throw new \ErrorException("Can't set cookie, headers already sent.");
                                         } else {
-                                            setcookie($this->tokenName, $hash, time() + 3600 * 24 * 30, '/');
+                                            setcookie($this->tokenName, $hash, time() + 3600 * 24 * 30, '/', "", false, true););
                                         }
                                     }
                                     $this->error = '';
