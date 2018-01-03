@@ -32,7 +32,7 @@ class Logout extends Common implements ILogout
             $token->delete($hash);
             if ($setCookie) {
                 if (!headers_sent()) {
-                    setcookie($this->tokenName, '', time() - 3600 * 24 * 30, '/', "", false, true););
+                    setcookie($this->tokenName, '', time() - 3600 * 24 * 30, '/', "", false, true);
                 }
             }
             return true;
